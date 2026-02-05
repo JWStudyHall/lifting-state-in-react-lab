@@ -6,7 +6,7 @@ import "./App.css";
 function App() {
   const [stack, setStack] = useState([]);
 
-  const [availableIngredients] = [
+  const availableIngredients = [
     { name: "Kaiser Bun", color: "saddlebrown" },
     { name: "Sesame Bun", color: "sandybrown" },
     { name: "Gluten Free Bun", color: "peru" },
@@ -22,23 +22,22 @@ function App() {
     { name: "Cheddar Cheese", color: "#FDE18B" },
     { name: "Swiss Cheese", color: "#F1E1A8" },
   ];
-  const addToBurger = (ingredient) => {
+  const addIngredient = (ingredient) => {
     setStack((prevStack) => [...prevStack, ingredient]);
   };
-  const removeFromBurger = (Ingredient) => {};
+  const removeIngredient = (ingredientToRemove) => {
+    const newStack = stack.filter((ingredient) => ingredient.name !== ingredientToRemove.name);
+    setStack(newStack);
+  };
 
   return (
-    <>
-      <h1>Burger Stacker</h1>
-      <section>
-        <IngredientList
-          ingredients={availableIngredients}
-          addToBurger={addToBurger}
-        />
-        <BurgerStack ingredients={stack} />
-        {/* List & Stack components */}
-      </section>
-    </>
+    <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <IngredientList
+        ingredients={availableIngredients}
+        addIngredient={addIngredient}
+      />
+      <BurgerStack stack={stack} removeIngredient={removeIngredient} />
+    </div>
   );
 }
 
